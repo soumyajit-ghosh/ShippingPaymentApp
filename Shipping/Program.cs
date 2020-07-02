@@ -9,19 +9,44 @@ namespace Shipping
     {
         static void Main(string[] args)
         {
+                bool wrongInput = true;          
+                Payment payment = new Payment();
+                while (wrongInput)
+                {
+                    try
+                    {
+                        Console.WriteLine("Enter 1 for Physical Products \n Enter 2 for Books \n Enter 3 for Video \n Enter 4 for Membership \n 5 to quit");
+                        OrderTypes productType = (OrderTypes)(Convert.ToInt32(Console.ReadLine()) - 1);
+                        payment.Type = productType;
+                        if (productType == OrderTypes.Membership)
+                        {
+                            Console.WriteLine("Enter 1 for Activate Membership \n Enter 2 for Update Membership\n");
+                            OrderMode orderMode = (OrderMode)(Convert.ToInt32(Console.ReadLine()) - 1);
+                            payment.OrderMode = orderMode;
+                        }
 
-            PaymentClientService makePayment = new PaymentClientService();
+                        Console.WriteLine("Enter Amount");
+                        payment.Amount = Convert.ToDecimal(Console.ReadLine());
+                        wrongInput = false;
+                        
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Bad Input, try again");
+                    }
+                }
 
-            Console.WriteLine("************ Activte Membership  **************");
-            Payment membershipPayment = new Payment { Type = OrderTypes.Membership, Amount = 200, OrderMode = OrderMode.ActivateMembership };
-            makePayment.PaymentMade(membershipPayment);
 
-            Console.WriteLine("************ Payment for Book  **************");
-            Payment bookPayment = new Payment { Type = OrderTypes.Book, Amount = 100};         
-            makePayment.PaymentMade(bookPayment);
-
-            Console.ReadKey();
-            
+                try
+                {
+                    PaymentClientService makePayment = new PaymentClientService();
+                    makePayment.PaymentMade(payment);
+                    Console.ReadKey();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Internal Server Error");
+                }     
         }
     }
 }

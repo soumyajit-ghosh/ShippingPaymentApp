@@ -11,8 +11,9 @@ namespace Shipping
         {
             PhysicalProduct,
             Book,
-            Membership,
-            Video
+            Video,
+            Membership
+            
         }
 
         public enum OrderMode
