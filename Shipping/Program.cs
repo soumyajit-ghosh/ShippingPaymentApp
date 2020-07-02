@@ -15,22 +15,32 @@ namespace Shipping
                 {
                     try
                     {
-                        Console.WriteLine("Enter 1 for Physical Products \n Enter 2 for Books \n Enter 3 for Video \n Enter 4 for Membership \n 5 to quit");
-                        OrderTypes productType = (OrderTypes)(Convert.ToInt32(Console.ReadLine()) - 1);
-                        payment.Type = productType;
-                        if (productType == OrderTypes.Membership)
+                        Console.WriteLine("Enter 1 for Physical Products \n Enter 2 for Books \n Enter 3 for Video \n Enter 4 for Membership \n Enter 5 to quit");
+                        int userInput = Convert.ToInt32(Console.ReadLine());
+                        if (userInput != 5)
                         {
-                            Console.WriteLine("Enter 1 for Activate Membership \n Enter 2 for Update Membership\n");
-                            OrderMode orderMode = (OrderMode)(Convert.ToInt32(Console.ReadLine()) - 1);
-                            payment.OrderMode = orderMode;
-                        }
+                            OrderTypes productType = (OrderTypes)(userInput - 1);
+                            payment.Type = productType;
+                            if (productType == OrderTypes.Membership)
+                            {
+                                Console.WriteLine("Enter 1 for Activate Membership \n Enter 2 for Update Membership\n");
+                                OrderMode orderMode = (OrderMode)(Convert.ToInt32(Console.ReadLine()) - 1);
+                                payment.OrderMode = orderMode;
+                            }
 
-                        Console.WriteLine("Enter Amount");
-                        payment.Amount = Convert.ToDecimal(Console.ReadLine());
-                        wrongInput = false;
-                        
+                            Console.WriteLine("Enter Amount");
+                            payment.Amount = Convert.ToDecimal(Console.ReadLine());
+                            wrongInput = false;
+                        }
+                    else
+                    {
+                        Environment.Exit(0);
                     }
-                    catch (Exception ex)
+
+
+
+                }
+                catch (Exception ex)
                     {
                         Console.WriteLine("Bad Input, try again");
                     }
